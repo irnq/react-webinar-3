@@ -1,4 +1,4 @@
-import { counterFromValue } from './counterFromValue';
+import { counterFromValue } from './utils';
 
 /**
  * Хранилище состояния приложения
@@ -71,14 +71,15 @@ class Store {
       ...this.state,
       list: this.state.list.map((item) => {
         if (item.code === code) {
-          item.selected = !item.selected;
-          if (item.selected) {
-            item.selectedCounter = (item.selectedCounter || 0) + 1;
-          }
-        } else {
-          item.selected = false;
+          // Смена выделения и подсчёт
+          return {
+            ...item,
+            selected: !item.selected,
+            count: item.selected ? item.count : item.count + 1 || 1,
+          };
         }
-        return item;
+        // Сброс выделения если выделена
+        return item.selected ? { ...item, selected: false } : item;
       }),
     });
   }
