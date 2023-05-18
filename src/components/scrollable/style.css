@@ -1,0 +1,13 @@
+.Scrollable {
+  overflow-y: auto;
+}
+
+.Scrollable::-webkit-scrollbar {
+  appearance: none;
+  width: 5px;
+}
+
+.Scrollable::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 50px;
+}

@@ -1,20 +1,41 @@
 .Item {
   display: flex;
   justify-content: flex-start;
-  transition: background-color 1s;
 }
 
 .Item-code {
-  padding: 20px 10px 20px 20px;
+  padding: 22px 10px 17px 20px;
 }
 
 .Item-title {
-  width: 100%;
-  padding: 20px 10px;
+  flex-grow: 1;
+  padding: 22px 10px 17px;
 }
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
+  padding: 22px 20px 17px 10px;
+}
+
+.Item-price {
+  padding: 20px 15px 17px;
+  white-space: nowrap;
+  font-size: 18px;
+  text-align: right;
+}
+
+.Item-count {
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: right;
+  white-space: nowrap;
+  width: 100px;
+  padding: 20px 15px 21px 0;
+  font-size: 18px;
+}
+
+.Item button {
+  width: 76px;
+  height: 21px;
 }

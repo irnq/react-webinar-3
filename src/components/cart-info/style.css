@@ -1,0 +1,13 @@
+.CartInfo {
+  display: inline-block;
+}
+
+.CartInfo p {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+}
+
+.CartInfo b {
+  margin-left: 10px;
+}

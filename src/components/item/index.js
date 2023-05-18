@@ -1,21 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatPrice } from '../../utils';
+import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
 function Item(props) {
   const callbacks = {
-    onDelete: (e) => {
+    onItemAction: (e) => {
       e.stopPropagation();
-      props.onDelete(props.item.code);
+      props.onItemAction(props.item.code);
     },
   };
 
+  const cn = bem('Item');
+
   return (
-    <div className='Item'>
-      <div className='Item-code'>{props.item.code}</div>
-      <div className='Item-title'>{props.item.title} </div>
-      <div className='Item-actions'>
-        <button onClick={callbacks.onDelete}>Удалить</button>
+    <div className={cn()}>
+      <div className={cn('code')}>{props.item.code}</div>
+      <div className={cn('title')}>{props.item.title} </div>
+      <div className={cn('price')}>{formatPrice(props.item.price)} ₽</div>
+      {props.itemCount ? <div className={cn('count')}>{props.itemCount} шт</div> : false}
+      <div className={cn('actions')}>
+        <button onClick={callbacks.onItemAction}>
+          {props.itemActionType === 'remove' ? 'Удалить' : 'Добавить'}
+        </button>
       </div>
     </div>
   );
@@ -26,12 +34,14 @@ Item.propTypes = {
     code: PropTypes.number,
     title: PropTypes.string,
   }).isRequired,
-  onDelete: PropTypes.func,
-  onSelect: PropTypes.func,
+  onItemAction: PropTypes.func,
+  itemActionType: PropTypes.oneOf(['remove', 'add']),
+  itemCount: PropTypes.number,
 };
 
 Item.defaultProps = {
-  onDelete: () => {},
+  onItemAction: () => {},
+  itemActionType: 'add',
 };
 
 export default React.memo(Item);

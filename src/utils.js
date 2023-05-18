@@ -16,6 +16,11 @@ export function plural(value, variants = {}, locale = 'ru-RU') {
   return variants[key] || '';
 }
 
+export function formatPrice(value, locale = 'ru-RU', options) {
+  const numberFormat = new Intl.NumberFormat(locale, options);
+  return numberFormat.format(value);
+}
+
 export function makeCounterFromValue(value = 0) {
   return () => ++value;
 }

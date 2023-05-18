@@ -1,16 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Item from '../item';
+import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
-function List({ list, onDeleteItem }) {
+function List({ list, onItemAction, itemActionType, itemsCount }) {
+  const cn = bem('List');
   return (
-    <div className='List'>
-      {list.map((item) => (
-        <div key={item.code} className='List-item'>
-          <Item item={item} onDelete={onDeleteItem} />
-        </div>
-      ))}
+    <div className={cn()}>
+      {list.length > 0 ? (
+        list.map((item) => (
+          <div key={item.code} className={cn('item')}>
+            <Item
+              item={item}
+              onItemAction={onItemAction}
+              itemActionType={itemActionType}
+              itemCount={itemsCount ? itemsCount[item.code] : null}
+            />
+          </div>
+        ))
+      ) : (
+        <p className={cn('empty')}>Список пуст.</p>
+      )}
     </div>
   );
 }
@@ -21,11 +32,14 @@ List.propTypes = {
       code: PropTypes.number,
     }),
   ).isRequired,
-  onDeleteItem: PropTypes.func,
+  onItemAction: PropTypes.func,
+  itemActionType: PropTypes.oneOf(['remove', 'add']),
+  itemsCount: PropTypes.object,
 };
 
 List.defaultProps = {
-  onDeleteItem: () => {},
+  onItemAction: () => {},
+  itemActionType: 'add',
 };
 
 export default React.memo(List);

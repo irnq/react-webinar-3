@@ -1,0 +1,12 @@
+.CartFooter {
+  display: flex;
+  width: 150px;
+  justify-content: space-between;
+  margin: 20px 120px 20px auto;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.CartFooter b:last-child {
+  margin-left: 10px;
+}
