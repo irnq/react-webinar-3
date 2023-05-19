@@ -7,7 +7,6 @@ import ModalWindow from './components/modal-window';
 import Spacer from './components/spacer';
 import CartInfo from './components/cart-info';
 import CartFooter from './components/cart-footer';
-import Scrollable from './components/scrollable';
 
 /**
  * Приложение
@@ -64,15 +63,14 @@ function App({ store }) {
         ) : (
           false
         )}
-        <Scrollable maxHeight={189}>
-          <List
-            list={cart}
-            itemsCount={itemsCountInCart}
-            onItemAction={callbacks.onDeleteItemFromCart}
-            itemActionType='remove'
-          />
-        </Scrollable>
+        <List
+          list={cart}
+          itemsCount={itemsCountInCart}
+          onItemAction={callbacks.onDeleteItemFromCart}
+          itemActionType='remove'
+        />
         {cart.length > 0 ? <CartFooter sum={cartSum} /> : false}
+        <Spacer height={89} />
       </ModalWindow>
     </PageLayout>
   );
