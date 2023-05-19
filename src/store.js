@@ -1,7 +1,6 @@
 const EMPTY_STATE = {
   list: [],
   cart: [],
-  itemsCountInCart: {},
   cartSum: 0,
 };
 /**
@@ -51,24 +50,26 @@ class Store {
    * Добавление в корзину
    */
   addItemToCart(itemCode) {
-    const currentItem = this.state.list.find((item) => item.code === itemCode);
-    if (!this.state.itemsCountInCart[itemCode]) {
+    const indexOfItem = this.state.cart.findIndex((item) => item.code === itemCode);
+    if (indexOfItem < 0) {
+      const currentItem = { ...this.state.list.find((item) => item.code === itemCode) };
       if (currentItem) {
         this.setState({
           ...this.state,
-          cart: this.state.cart.concat(currentItem),
-          itemsCountInCart: { ...this.state.itemsCountInCart, [itemCode]: 1 },
+          cart: this.state.cart.concat({ ...currentItem, countInCart: 1 }),
           cartSum: this.state.cartSum + currentItem.price,
         });
       }
     } else {
+      this.state.cart[indexOfItem].countInCart++;
       this.setState({
         ...this.state,
-        itemsCountInCart: {
-          ...this.state.itemsCountInCart,
-          [itemCode]: this.state.itemsCountInCart[itemCode] + 1,
-        },
-        cartSum: this.state.cartSum + currentItem.price,
+        cart: [
+          ...this.state.cart.slice(0, indexOfItem),
+          { ...this.state.cart[indexOfItem] },
+          ...this.state.cart.slice(indexOfItem + 1),
+        ],
+        cartSum: this.state.cartSum + this.state.cart[indexOfItem].price,
       });
     }
   }
@@ -79,11 +80,10 @@ class Store {
    */
   deleteItemFromCart(itemCode) {
     const currentItem = this.state.cart.find((item) => item.code === itemCode);
-    const totalItemPrice = currentItem.price * this.state.itemsCountInCart[itemCode];
+    const totalItemPrice = currentItem.price * currentItem.countInCart;
     this.setState({
       ...this.state,
       cart: this.state.cart.filter((item) => item.code !== itemCode),
-      itemsCountInCart: { ...this.state.itemsCountInCart, [itemCode]: 0 },
       cartSum: this.state.cartSum - totalItemPrice,
     });
   }

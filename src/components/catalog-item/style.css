@@ -1,0 +1,31 @@
+.CatalogItem {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.CatalogItem-code {
+  padding: 22px 10px 17px 20px;
+}
+
+.CatalogItem-title {
+  flex-grow: 1;
+  padding: 22px 10px 17px;
+}
+
+.CatalogItem-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 22px 20px 17px 10px;
+}
+
+.CatalogItem-price {
+  padding: 20px 15px 17px;
+  white-space: nowrap;
+  font-size: 18px;
+  text-align: right;
+}
+
+.CatalogItem button {
+  width: 76px;
+  height: 21px;
+}

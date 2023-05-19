@@ -7,6 +7,8 @@ import ModalWindow from './components/modal-window';
 import Spacer from './components/spacer';
 import CartInfo from './components/cart-info';
 import CartFooter from './components/cart-footer';
+import CatalogItem from './components/catalog-item';
+import CartItem from './components/cart-item';
 
 /**
  * Приложение
@@ -16,7 +18,6 @@ import CartFooter from './components/cart-footer';
 function App({ store }) {
   const [isCartOpen, setCartOpen] = useState(false);
   const cartSum = store.getState().cartSum;
-  const itemsCountInCart = store.getState().itemsCountInCart;
   const cart = store.getState().cart;
   const list = store.getState().list;
 
@@ -51,7 +52,9 @@ function App({ store }) {
         <CartInfo count={cart.length} sum={cartSum} />
         <button onClick={callbacks.onOpenCart}>Перейти</button>
       </Controls>
-      <List list={list} onItemAction={callbacks.onAddItemToCart} itemActionType='add' />
+      <List list={list}>
+        <CatalogItem onItemAction={callbacks.onAddItemToCart} />
+      </List>
       <ModalWindow isOpen={isCartOpen} cart={cart} closable onClose={callbacks.onCloseCart}>
         <Head title='Корзина'>
           <button onClick={callbacks.onCloseCart}>Закрыть</button>
@@ -63,12 +66,9 @@ function App({ store }) {
         ) : (
           false
         )}
-        <List
-          list={cart}
-          itemsCount={itemsCountInCart}
-          onItemAction={callbacks.onDeleteItemFromCart}
-          itemActionType='remove'
-        />
+        <List list={cart}>
+          <CartItem onItemAction={callbacks.onDeleteItemFromCart} />
+        </List>
         {cart.length > 0 ? <CartFooter sum={cartSum} /> : false}
         <Spacer height={89} />
       </ModalWindow>
