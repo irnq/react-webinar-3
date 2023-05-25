@@ -1,0 +1,38 @@
+.PaginationControl {
+  padding: 21px;
+  display: flex;
+  justify-content: end;
+  bottom: 0;
+  background-color: #fff;
+  /* position: sticky; */
+}
+
+.PaginationControl-btn {
+  cursor: pointer;
+  color: #000;
+  background-color: #fff;
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  padding: 1px 3px;
+  min-width: 20px;
+}
+
+.PaginationControl-btn:hover {
+  background-color: #e1e1e1;
+}
+
+.PaginationControl-btn--current {
+  background-color: #0087e9;
+  color: #fff;
+  pointer-events: none;
+}
+
+.PaginationControl-dots {
+  width: 20px;
+  color: #ccc;
+  pointer-events: none;
+  text-align: center;
+}
