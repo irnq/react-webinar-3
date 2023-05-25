@@ -28,7 +28,9 @@ function PaginationControl(props) {
     setViewPages(pages);
   }, [props.currentPage, props.totalPages]);
 
-  console.log(viewPages);
+  if (viewPages.length <= 1) {
+    return false;
+  }
 
   const renderPagination = (page, i, list) => {
     if (page === props.currentPage) {
