@@ -1,19 +1,16 @@
 import { memo, useCallback, useEffect } from 'react';
-import { cn as bem } from '@bem-react/classname';
 import { useParams } from 'react-router-dom';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
 import BasketTool from '../../components/basket-tool';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
-import { numberFormat } from '../../utils';
-import './style.css';
+import ProductInformation from '../../components/product-information';
 
 function Product() {
   const params = useParams();
   const id = params.id;
   const store = useStore();
-  const cn = bem('Product');
 
   const select = useSelector((state) => ({
     product: state.products.fetched,
@@ -39,20 +36,7 @@ function Product() {
       <Head title={select.product[id]?.title || ''} />
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
       {select.product[id] && (
-        <div className={cn()}>
-          <p className={cn('description')}>{select.product[id].description}</p>
-          <p className={cn('country')}>
-            Страна производитель:{' '}
-            <b>
-              {select.product[id].madeIn.title} ({select.product[id].madeIn.code})
-            </b>
-          </p>
-          <p className={cn('year')}>
-            Год выпуска: <b>{select.product[id].edition}</b>
-          </p>
-          <p className={cn('price')}>Цена: {numberFormat(+select.product[id].price)} ₽</p>
-          <button onClick={() => callbacks.addToBasket(id)}>Добавить</button>
-        </div>
+        <ProductInformation product={select.product[id]} onAdd={callbacks.addToBasket} />
       )}
     </PageLayout>
   );

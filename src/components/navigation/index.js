@@ -9,7 +9,11 @@ function Navigation(props) {
   return (
     <div className={cn()}>
       {props.linkList.map((link) => {
-        return <Link to={link.href}>{link.title}</Link>;
+        return (
+          <Link key={link.title} to={link.href}>
+            {link.title}
+          </Link>
+        );
       })}
     </div>
   );

@@ -1,4 +1,4 @@
-.Product {
+.ProductInformation {
   padding: 20px 40px;
   font-size: 18px;
   display: flex;
@@ -7,11 +7,11 @@
   gap: 20px;
 }
 
-.Product * {
+.ProductInformation * {
   margin: 0;
 }
 
-.Product-price {
+.ProductInformation-price {
   font-size: 24px;
   font-weight: 700;
 }
