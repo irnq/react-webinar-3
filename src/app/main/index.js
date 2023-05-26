@@ -1,17 +1,22 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import PageLayout from '../../components/page-layout';
 import Head from '../../components/head';
+import List from '../../components/list';
+import Item from '../../components/item';
+import PaginationControl from '../../components/pagination-control';
 import BasketTool from '../../components/basket-tool';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Catalog from '../../components/catalog/';
-import Product from '../../components/product';
+import { useSearchParams } from 'react-router-dom';
 
 function Main() {
   const store = useStore();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const select = useSelector((state) => ({
+    list: state.catalog.list,
+    currentPage: state.catalog.currentPage,
+    totalPages: state.catalog.totalPages,
     amount: state.basket.amount,
     sum: state.basket.sum,
   }));
@@ -19,16 +24,36 @@ function Main() {
   const callbacks = {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+    // Добавление в корзину
+    addToBasket: useCallback((_id) => store.actions.basket.addToBasket(_id), [store]),
+    // Перейти на страницу
+    goToPage: useCallback((page) => setSearchParams(`?page=${page}`), [store]),
+  };
+
+  useEffect(() => {
+    let page = +searchParams.get('page') || 1;
+    store.actions.catalog.goToPage(page);
+  }, [searchParams]);
+
+  const renders = {
+    item: useCallback(
+      (item) => {
+        return <Item item={item} onAdd={callbacks.addToBasket} />;
+      },
+      [callbacks.addToBasket],
+    ),
   };
 
   return (
     <PageLayout>
       <Head title='Магазин' />
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
-      <Routes>
-        <Route path='/' element={<Catalog />} />
-        <Route path='/product/:id' element={<Product />} />
-      </Routes>
+      <List list={select.list} renderItem={renders.item} />
+      <PaginationControl
+        currentPage={select.currentPage}
+        totalPages={select.totalPages}
+        goTo={callbacks.goToPage}
+      />
     </PageLayout>
   );
 }
