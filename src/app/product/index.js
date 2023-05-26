@@ -25,7 +25,7 @@ function Product() {
     if (!select.product || !select.product[id]) {
       store.actions.products.loadProduct(id);
     }
-  }, []);
+  }, [params]);
 
   const callbacks = {
     // Добавление в корзину
