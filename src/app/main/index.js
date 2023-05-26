@@ -8,6 +8,7 @@ import BasketTool from '../../components/basket-tool';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import { useSearchParams } from 'react-router-dom';
+import { productRoute } from '../../constants/routes';
 
 function Main() {
   const store = useStore();
@@ -38,7 +39,7 @@ function Main() {
   const renders = {
     item: useCallback(
       (item) => {
-        return <Item item={item} onAdd={callbacks.addToBasket} />;
+        return <Item item={item} onAdd={callbacks.addToBasket} link={productRoute.href} />;
       },
       [callbacks.addToBasket],
     ),
