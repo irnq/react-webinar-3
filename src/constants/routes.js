@@ -1,2 +1,2 @@
-export const mainRoute = { title: 'Главная', href: '/' };
-export const productRoute = { title: 'Страница товара', href: '/product' };
+export const mainRoute = { key: 'main', title: 'Главная', href: '/' };
+export const productRoute = { key: 'product', title: 'Страница товара', href: '/product' };

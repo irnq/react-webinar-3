@@ -1,0 +1,32 @@
+.Toggler {
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 3px 6px;
+  transition: background-color 0.2s;
+}
+
+.Toggler:hover {
+  background-color: #ccc;
+}
+
+.Toggler-title {
+  margin: 0;
+  padding: 0;
+}
+
+.Toggler-bar {
+  display: flex;
+  gap: 1px;
+}
+
+.Toggler-bar-item {
+  height: 3px;
+  background-color: #000;
+  border-radius: 1px;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.Toggler-bar-item--active {
+  background-color: #0087e9;
+}

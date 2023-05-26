@@ -6,6 +6,7 @@ import BasketTotal from '../../components/basket-total';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import { productRoute } from '../../constants/routes';
+import { getLocaleText } from '../../service/localization';
 
 function Basket() {
   const store = useStore();
@@ -14,6 +15,7 @@ function Basket() {
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    lang: state.localization.lang,
   }));
 
   const callbacks = {
@@ -32,6 +34,7 @@ function Basket() {
             onRemove={callbacks.removeFromBasket}
             onTitleClick={callbacks.closeModal}
             link={productRoute.href}
+            locale={select.lang}
           />
         );
       },
@@ -40,9 +43,13 @@ function Basket() {
   };
 
   return (
-    <ModalLayout title='Корзина' onClose={callbacks.closeModal}>
+    <ModalLayout
+      title={getLocaleText('basket', 'title', select.lang)}
+      onClose={callbacks.closeModal}
+      locale={select.lang}
+    >
       <List list={select.list} renderItem={renders.itemBasket} />
-      <BasketTotal sum={select.sum} />
+      <BasketTotal sum={select.sum} locale={select.lang} />
     </ModalLayout>
   );
 }

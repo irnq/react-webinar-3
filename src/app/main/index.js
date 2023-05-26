@@ -9,6 +9,8 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import { useSearchParams } from 'react-router-dom';
 import { productRoute } from '../../constants/routes';
+import Toggler from '../../components/toggler';
+import { getLocaleText, langOptions } from '../../service/localization';
 
 function Main() {
   const store = useStore();
@@ -20,6 +22,7 @@ function Main() {
     totalPages: state.catalog.totalPages,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    lang: state.localization.lang,
   }));
 
   const callbacks = {
@@ -29,6 +32,8 @@ function Main() {
     addToBasket: useCallback((_id) => store.actions.basket.addToBasket(_id), [store]),
     // Перейти на страницу
     goToPage: useCallback((page) => setSearchParams(`?page=${page}`), [store]),
+    // Переключение языка
+    setLang: useCallback((option) => store.actions.localization.setLang(option), [store]),
   };
 
   useEffect(() => {
@@ -39,16 +44,30 @@ function Main() {
   const renders = {
     item: useCallback(
       (item) => {
-        return <Item item={item} onAdd={callbacks.addToBasket} link={productRoute.href} />;
+        return (
+          <Item
+            item={item}
+            onAdd={callbacks.addToBasket}
+            link={productRoute.href}
+            locale={select.lang}
+          />
+        );
       },
-      [callbacks.addToBasket],
+      [callbacks.addToBasket, select.lang],
     ),
   };
 
   return (
     <PageLayout>
-      <Head title='Магазин' />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
+      <Head title={getLocaleText('header', 'title', select.lang)}>
+        <Toggler defaultValue={select.lang} options={langOptions} onChange={callbacks.setLang} />
+      </Head>
+      <BasketTool
+        onOpen={callbacks.openModalBasket}
+        amount={select.amount}
+        sum={select.sum}
+        locale={select.lang}
+      />
       <List list={select.list} renderItem={renders.item} />
       <PaginationControl
         currentPage={select.currentPage}
