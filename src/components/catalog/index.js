@@ -4,7 +4,7 @@ import Item from '../item';
 import PaginationControl from '../pagination-control';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function Catalog() {
   const store = useStore();

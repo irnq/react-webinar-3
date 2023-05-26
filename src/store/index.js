@@ -4,14 +4,14 @@ import * as modules from './exports.js';
  * Хранилище состояния приложения
  */
 class Store {
-
   constructor(initState = {}) {
     this.listeners = []; // Слушатели изменений состояния
     this.state = initState;
     /** @type {{
      * basket: Basket,
      * catalog: Catalog,
-     * modals: Modals
+     * modals: Modals,
+     * products: Products
      * }} */
     this.actions = {};
     for (const name of Object.keys(modules)) {
@@ -29,13 +29,13 @@ class Store {
     this.listeners.push(listener);
     // Возвращается функция для удаления добавленного слушателя
     return () => {
-      this.listeners = this.listeners.filter(item => item !== listener);
-    }
+      this.listeners = this.listeners.filter((item) => item !== listener);
+    };
   }
 
   /**
    * Выбор состояния
-   * @returns {{basket: Object, catalog: Object, modals: Object}}
+   * @returns {{basket: Object, catalog: Object, modals: Object, products: Object}}
    */
   getState() {
     return this.state;

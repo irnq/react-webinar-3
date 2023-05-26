@@ -1,0 +1,17 @@
+.Product {
+  padding: 20px 40px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.Product * {
+  margin: 0;
+}
+
+.Product-price {
+  font-size: 24px;
+  font-weight: 700;
+}

@@ -28,10 +28,6 @@ function PaginationControl(props) {
     setViewPages(pages);
   }, [props.currentPage, props.totalPages]);
 
-  if (viewPages.length <= 1) {
-    return false;
-  }
-
   const renderPagination = (page, i, list) => {
     if (page === props.currentPage) {
       return (
@@ -60,7 +56,7 @@ function PaginationControl(props) {
     );
   };
 
-  return <div className={cn()}>{viewPages.map(renderPagination)}</div>;
+  return viewPages.length > 1 && <div className={cn()}>{viewPages.map(renderPagination)}</div>;
 }
 
 PaginationControl.propTypes = {

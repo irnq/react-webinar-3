@@ -6,6 +6,7 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Catalog from '../../components/catalog/';
+import Product from '../../components/product';
 
 function Main() {
   const store = useStore();
@@ -21,15 +22,14 @@ function Main() {
   };
 
   return (
-    <BrowserRouter>
-      <PageLayout>
-        <Head title='Магазин' />
-        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
-        <Routes>
-          <Route path='/' element={<Catalog />} />
-        </Routes>
-      </PageLayout>
-    </BrowserRouter>
+    <PageLayout>
+      <Head title='Магазин' />
+      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
+      <Routes>
+        <Route path='/' element={<Catalog />} />
+        <Route path='/product/:id' element={<Product />} />
+      </Routes>
+    </PageLayout>
   );
 }
 
