@@ -1,8 +1,16 @@
-.Input{
+.Input {
   font-size: 16px;
   padding: 2px;
 }
 
-.Input_theme_big{
+.Input_theme_small {
+  width: 200px;
+}
+
+.Input_theme_medium {
   width: 300px;
+}
+
+.Input_theme_big {
+  width: 500px;
 }
