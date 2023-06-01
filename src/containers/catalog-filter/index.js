@@ -5,6 +5,7 @@ import useSelector from '../../hooks/use-selector';
 import Select from '../../components/select';
 import Input from '../../components/input';
 import SideLayout from '../../components/side-layout';
+import { nestedList } from '../../utils';
 
 function CatalogFilter() {
   const store = useStore();
@@ -12,9 +13,16 @@ function CatalogFilter() {
   const select = useSelector((state) => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
+    categories: state.categories.list,
+    category: state.catalog.params.category,
   }));
 
   const callbacks = {
+    // Выбор категории
+    onSetCategory: useCallback(
+      (category) => store.actions.catalog.setParams({ category, page: 1 }),
+      [store],
+    ),
     // Сортировка
     onSort: useCallback((sort) => store.actions.catalog.setParams({ sort }), [store]),
     // Поиск
@@ -33,12 +41,21 @@ function CatalogFilter() {
       ],
       [],
     ),
+    categories: useMemo(
+      () => nestedList(select.categories, { value: '', title: 'Все' }),
+      [select.categories],
+    ),
   };
 
   const { t } = useTranslate();
 
   return (
     <SideLayout padding='medium'>
+      <Select
+        options={options.categories}
+        value={select.category}
+        onChange={callbacks.onSetCategory}
+      />
       <Select options={options.sort} value={select.sort} onChange={callbacks.onSort} />
       <Input
         value={select.query}
