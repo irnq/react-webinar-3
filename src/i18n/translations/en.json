@@ -10,9 +10,23 @@
   "basket.unit": "pcs",
   "basket.delete": "Delete",
   "article.add": "Add",
+  "article.madeIn": "Country",
+  "article.category": "Category",
+  "article.year": "Year",
+  "article.price": "Price",
   "filter.reset": "Reset",
   "basket.articles": {
     "one": "article",
     "other": "articles"
-  }
+  },
+  "header.login": "Login",
+  "header.logout": "Logout",
+  "loginForm.login": "Login",
+  "loginForm.password": "Password",
+  "loginForm.title": "Login",
+  "loginForm.submit": "Login",
+  "profile.title": "Profile",
+  "profile.name": "Name",
+  "profile.phone": "Phone",
+  "profile.email": "email"
 }

@@ -14,3 +14,8 @@
 .Input_theme_big {
   width: 500px;
 }
+
+.Input_position_vertical {
+  display: flex;
+  flex-direction: column;
+}

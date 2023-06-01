@@ -25,13 +25,18 @@ function Input(props) {
 
   const cn = bem('Input');
   return (
-    <input
-      className={cn({ theme: props.theme })}
-      value={value}
-      type={props.type}
-      placeholder={props.placeholder}
-      onChange={onChange}
-    />
+    <label className={cn({ position: props.labelPosition })}>
+      {props.label}
+      <input
+        className={cn({ theme: props.theme })}
+        value={value}
+        type={props.type}
+        id={props.id}
+        placeholder={props.placeholder}
+        onChange={onChange}
+        required={props.required}
+      />
+    </label>
   );
 }
 
@@ -41,13 +46,19 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  id: PropTypes.string,
   theme: PropTypes.oneOf(['small', 'medium', 'big']),
+  label: PropTypes.string,
+  labelPosition: PropTypes.oneOf(['vertical', 'horizontal']),
+  required: PropTypes.bool,
 };
 
 Input.defaultProps = {
   onChange: () => {},
   type: 'text',
   theme: 'medium',
+  labelPosition: 'horizontal',
+  required: false,
 };
 
 export default memo(Input);

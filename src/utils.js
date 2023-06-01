@@ -84,13 +84,11 @@ export function nestedList(list, firstElement) {
   for (let item of parents) {
     // пропускаем уже обработанные элементы
     if (handledIds.has(item[0])) {
-      console.log('skip');
       continue;
     }
 
     // выйдем из цикла если обработали все элементы
     if (handledIds.size === list.length) {
-      console.log('break');
       break;
     }
 

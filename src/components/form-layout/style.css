@@ -1,0 +1,18 @@
+.FormLayout {
+  padding: 20px;
+}
+
+.FormLayout-title {
+  margin-bottom: 17px;
+}
+
+.FormLayout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  margin-bottom: 20px;
+}
+
+.FormLayout-error {
+  color: #ff0000;
+}

@@ -10,11 +10,25 @@
   "basket.unit": "шт",
   "basket.delete": "Удалить",
   "article.add": "Добавить",
+  "article.madeIn": "Страна производитель",
+  "article.category": "Категория",
+  "article.year": "Год выпуска",
+  "article.price": "Цена",
   "filter.reset": "Сбросить",
   "basket.articles": {
     "one": "товар",
     "few": "товара",
     "many": "товаров",
     "other": "товара"
-  }
+  },
+  "header.login": "Вход",
+  "header.logout": "Выход",
+  "loginForm.login": "Логин",
+  "loginForm.password": "Пароль",
+  "loginForm.title": "Вход",
+  "loginForm.submit": "Войти",
+  "profile.title": "Профиль",
+  "profile.name": "Имя",
+  "profile.phone": "Телефон",
+  "profile.email": "email"
 }
