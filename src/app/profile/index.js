@@ -9,16 +9,24 @@ import Spinner from '../../components/spinner';
 import ProfileCard from '../../components/profile-card';
 import LocaleSelect from '../../containers/locale-select';
 import PageHeader from '../../components/page-header';
-import { Navigate } from 'react-router-dom';
+import useInit from '../../hooks/use-init';
 
 function Profile() {
   const store = useStore();
 
   const select = useSelector((state) => ({
-    user: state.user.data,
+    user: state.profile.data,
     isAuth: state.user.isAuth,
-    waiting: state.user.waiting,
+    waiting: state.profile.waiting,
   }));
+
+  useInit(
+    () => {
+      store.actions.profile.load();
+    },
+    [],
+    true,
+  );
 
   const { t } = useTranslate();
 
@@ -26,10 +34,6 @@ function Profile() {
     // logout
     logout: useCallback(() => store.actions.user.logout(), [store]),
   };
-
-  if (!select.isAuth && !select.waiting) {
-    return <Navigate to='/login' replace />;
-  }
 
   return (
     <PageLayout>

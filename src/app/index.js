@@ -7,6 +7,8 @@ import Article from './article';
 import Login from './login';
 import useStore from '../hooks/use-store';
 import Profile from './profile';
+import useInit from '../hooks/use-init';
+import ProtectedRoute from '../containers/protected-route';
 
 /**
  * Приложение
@@ -17,9 +19,9 @@ function App() {
 
   const activeModal = useSelector((state) => state.modals.name);
 
-  useEffect(() => {
+  useInit(() => {
     store.actions.user.loginByToken();
-  }, []);
+  });
 
   return (
     <>
@@ -27,7 +29,14 @@ function App() {
         <Route path={''} element={<Main />} />
         <Route path={'/articles/:id'} element={<Article />} />
         <Route path={'/login'} element={<Login />} />
-        <Route path={'/profile'} element={<Profile />} />
+        <Route
+          path={'/profile'}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {activeModal === 'basket' && <Basket />}

@@ -14,7 +14,8 @@ class Store {
      * article: ArticleState,
      * locale: LocaleState,
      * categories: CategoriesState,
-     * user: UserState
+     * user: UserState,
+     * profile: ProfileState
      *
      * }} */
     this.actions = {};
@@ -47,6 +48,7 @@ class Store {
    * locale: Object,
    * categories: Object,
    * user: Object,
+   * profile: Object,
    *
    * }}
    */

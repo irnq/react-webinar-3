@@ -1,5 +1,5 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { memo, useCallback, useState } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useTranslate from '../../hooks/use-translate';
@@ -11,6 +11,7 @@ import LocaleSelect from '../../containers/locale-select';
 import PageHeader from '../../components/page-header';
 import FormLayout from '../../components/form-layout';
 import Input from '../../components/input';
+import useInit from '../../hooks/use-init';
 
 function Login() {
   const store = useStore();
@@ -18,12 +19,22 @@ function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
+  const { state } = useLocation();
+
   const select = useSelector((state) => ({
     user: state.user.data,
     waiting: state.user.waiting,
     isAuth: state.user.isAuth,
     error: state.user.error,
   }));
+
+  useInit(
+    () => {
+      store.actions.user.resetState();
+    },
+    [],
+    true,
+  );
 
   const callbacks = {
     onSubmit: (event) => {
@@ -34,12 +45,10 @@ function Login() {
     logout: useCallback(() => store.actions.user.logout(), [store]),
   };
 
-  useEffect(() => {}, [select.isAuth]);
-
   const { t } = useTranslate();
 
   if (select.isAuth) {
-    return <Navigate to='/' replace />;
+    return <Navigate to={state?.path || '/'} replace />;
   }
 
   return (

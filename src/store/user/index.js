@@ -1,14 +1,11 @@
 import StoreModule from '../module';
 
-/**
- * Детальная ифнормация о товаре для страницы товара
- */
 class UserState extends StoreModule {
   initState() {
     return {
       data: {},
       isAuth: false,
-      waiting: true, // признак ожидания загрузки
+      waiting: false, // признак ожидания загрузки
       error: [],
     };
   }
@@ -22,7 +19,7 @@ class UserState extends StoreModule {
       ...this.initState(),
       waiting: true,
     });
-    console.log(login);
+
     const body = JSON.stringify({
       login,
       password,
@@ -46,9 +43,7 @@ class UserState extends StoreModule {
 
       if (response.status !== 200) {
         this.setState({
-          data: {},
-          isAuth: false,
-          waiting: false,
+          ...this.initState(),
           error: json.error?.data?.issues?.map((issue) => ({
             code: response.status,
             message: issue.message,
@@ -77,24 +72,21 @@ class UserState extends StoreModule {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
       this.setState({
-        data: {},
-        waiting: false,
-        isAuth: false,
+        ...this.initState(),
         error: [{ message: e.message }],
       });
     }
   }
 
   async loginByToken() {
-    if (!localStorage.getItem('YToken') || !localStorage.getItem('YUser')) {
+    const token = localStorage.getItem('YToken');
+    if (!token || !localStorage.getItem('YUser')) {
       this.setState({
         ...this.initState(),
-        waiting: false,
       });
       return;
     }
 
-    const token = localStorage.getItem('YToken');
     const lsUser = JSON.parse(localStorage.getItem('YUser'));
 
     try {
@@ -115,7 +107,6 @@ class UserState extends StoreModule {
       if (response.status !== 200) {
         this.setState({
           ...this.initState(),
-          waiting: false,
           error: json.error?.data?.issues?.map((issue) => ({
             code: response.status,
             message: issue.message,
@@ -141,9 +132,23 @@ class UserState extends StoreModule {
     }
   }
 
-  logout() {
-    this.setState({ ...this.initState(), waiting: false });
+  async logout() {
+    const token = localStorage.getItem('YToken');
+
+    await fetch(`/api/v1/users/sign`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'X-Token': token,
+      },
+    });
+
+    this.setState({ ...this.initState() });
     localStorage.removeItem('YToken');
+  }
+
+  resetState() {
+    this.setState({ ...this.initState() });
   }
 }
 

@@ -10,7 +10,7 @@ function Input(props) {
   const [value, setValue] = useState(props.value);
 
   const onChangeDebounce = useCallback(
-    debounce((value) => props.onChange(value, props.name), 600),
+    debounce((value) => props.onChange(value, props.name), props.delay),
     [props.onChange, props.name],
   );
 
@@ -51,6 +51,7 @@ Input.propTypes = {
   label: PropTypes.string,
   labelPosition: PropTypes.oneOf(['vertical', 'horizontal']),
   required: PropTypes.bool,
+  delay: PropTypes.number,
 };
 
 Input.defaultProps = {
@@ -59,6 +60,7 @@ Input.defaultProps = {
   theme: 'medium',
   labelPosition: 'horizontal',
   required: false,
+  delay: 0,
 };
 
 export default memo(Input);
