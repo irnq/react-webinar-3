@@ -1,0 +1,19 @@
+.Comments {
+  padding: 20px 40px;
+}
+
+.Comments-title {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+
+.Comments-list {
+  margin: 0;
+  padding: 0;
+}
+
+.Comments-list-item {
+  list-style: none;
+}
