@@ -53,7 +53,7 @@ function CommentsBlock(props) {
         </li>
       );
     },
-    [openReplyId],
+    [openReplyId, props.isAuth],
   );
 
   return (

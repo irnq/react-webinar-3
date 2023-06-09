@@ -44,7 +44,10 @@ function Comments({ id }) {
   const callbacks = {
     sendComment: useCallback(
       (message, parent) => {
-        dispatch(commentsActions.post(message, parent, id));
+        const text = message.trim();
+        if (text) {
+          dispatch(commentsActions.post(message, parent));
+        }
       },
       [dispatch],
     ),

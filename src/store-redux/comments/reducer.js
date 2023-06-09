@@ -20,6 +20,14 @@ function reducer(state = initialState, action) {
     case 'comments/post-start':
       return { ...state, waiting: true };
 
+    case 'comments/post-success':
+      return {
+        ...state,
+        list: state.list.concat(action.payload.comment),
+        count: state.count + 1,
+        waiting: false,
+      };
+
     case 'comments/post-error':
       return { ...state, waiting: false }; //@todo текст ошибки сохранить?
 

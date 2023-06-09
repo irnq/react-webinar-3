@@ -5,7 +5,7 @@ import './style.css';
 import { Link } from 'react-router-dom';
 
 function CommentNew({ isAuth, t, title, onSubmit, parent }) {
-  const [message, setMessage] = useState('Текст');
+  const [message, setMessage] = useState('');
 
   const cn = bem('CommentNew');
 

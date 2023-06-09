@@ -4,8 +4,8 @@ import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import { Link } from 'react-router-dom';
 
-function CommentReply({ isAuth, t, title, onSubmit, onCancel, parent, username }) {
-  const [message, setMessage] = useState(`${t('comments.replyTo')} ${username}`);
+function CommentReply({ isAuth, t, title, onSubmit, onCancel, parent }) {
+  const [message, setMessage] = useState('');
 
   const cn = bem('CommentReply');
 
@@ -50,7 +50,6 @@ CommentReply.propTypes = {
   onCancel: PropTypes.func,
   t: PropTypes.func,
   title: PropTypes.string,
-  username: PropTypes.string,
   parent: PropTypes.shape({
     _id: PropTypes.string,
     _type: PropTypes.oneOf(['comment', 'article']),

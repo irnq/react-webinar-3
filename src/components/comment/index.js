@@ -35,7 +35,6 @@ function Comment({
           isAuth={isAuth}
           onSubmit={sendComment}
           parent={{ _id: comment._id, _type: 'comment' }}
-          username={comment?.author?.profile?.name}
           onCancel={() => onCancel(null)}
         />
       )}

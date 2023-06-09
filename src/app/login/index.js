@@ -56,7 +56,6 @@ function Login() {
     ),
   };
 
-  console.log(location.state);
   return (
     <PageLayout>
       <TopHead />
