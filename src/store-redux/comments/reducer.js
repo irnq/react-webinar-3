@@ -31,6 +31,15 @@ function reducer(state = initialState, action) {
     case 'comments/post-error':
       return { ...state, waiting: false }; //@todo текст ошибки сохранить?
 
+    case 'comments/open-reply':
+      return { ...state, list: state.list.concat(action.payload) };
+
+    case 'comments/reopen-reply':
+      return { ...state, list: state.list.slice(0, -1).concat(action.payload) };
+
+    case 'comments/close-reply':
+      return { ...state, list: state.list.slice(0, -1) };
+
     default:
       // Нет изменений
       return state;

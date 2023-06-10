@@ -5,10 +5,9 @@ import './style.css';
 import Comment from '../comment';
 import CommentDeleted from '../comment-deleted';
 import CommentNew from '../comment-new';
+import CommentReply from '../comment-reply';
 
 function CommentsBlock(props) {
-  const [openReplyId, setOpenReplyId] = useState(null);
-
   const cn = bem('Comments');
 
   const nestedCommentStyle = (level) => {
@@ -38,29 +37,35 @@ function CommentsBlock(props) {
       }
       return (
         <li key={comment._id} className={cn('list-item')} style={nestedCommentStyle(level)}>
-          <Comment
-            comment={comment}
-            locale={props.locale}
-            t={props.t}
-            onReply={setOpenReplyId}
-            onCancel={setOpenReplyId}
-            isAuth={props.isAuth}
-            onSubmit={props.sendComment}
-            sendComment={props.sendComment}
-            isReplyOpen={comment._id === openReplyId}
-            self={props.userId === comment?.author?._id}
-          />
+          {comment.isReply ? (
+            <CommentReply
+              t={props.t}
+              title={props.t('comments.newReply')}
+              isAuth={props.isAuth}
+              onSubmit={props.sendComment}
+              parent={{ ...comment.parent }}
+              onCancel={props.closeReply}
+            />
+          ) : (
+            <Comment
+              comment={comment}
+              locale={props.locale}
+              t={props.t}
+              onReply={props.openReply}
+              self={props.userId === comment?.author?._id}
+            />
+          )}
         </li>
       );
     },
-    [openReplyId, props.isAuth],
+    [props.isAuth, props.list, props.isReplyOpen],
   );
 
   return (
     <div className={cn()}>
       <h2 className={cn('title')}>{props.title}</h2>
       <ul className={cn('list')}>{props.list.map(renderComments)}</ul>
-      {!openReplyId && (
+      {!props.isReplyOpen && (
         <CommentNew
           t={props.t}
           title={props.t('comments.newComment')}
@@ -86,11 +91,17 @@ CommentsBlock.propTypes = {
     _id: PropTypes.string,
     _type: PropTypes.oneOf(['comment', 'article']),
   }),
+
+  closeReply: PropTypes.func,
+  openReply: PropTypes.func,
+  isReplyOpen: PropTypes.bool,
 };
 
 CommentsBlock.defaultProps = {
   t: (text) => text,
   sendComment: () => {},
+  closeReply: () => {},
+  openReply: () => {},
 };
 
 export default memo(CommentsBlock);

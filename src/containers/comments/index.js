@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
 import { useSelector as useReduxSelector, useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import useSelector from '../../hooks/use-selector';
 
 function Comments({ id }) {
   const dispatch = useDispatch();
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
 
   useInit(() => {
     dispatch(commentsActions.load(id));
@@ -46,11 +47,33 @@ function Comments({ id }) {
       (message, parent) => {
         const text = message.trim();
         if (text) {
+          setIsReplyOpen(false);
+          dispatch(commentsActions.closeReply());
+          console.log(parent);
           dispatch(commentsActions.post(message, parent));
         }
       },
       [dispatch],
     ),
+
+    openReply: useCallback(
+      (parentId) => {
+        if (isReplyOpen) {
+          dispatch(commentsActions.reOpenReply(parentId));
+        } else {
+          setIsReplyOpen(true);
+          dispatch(commentsActions.openReply(parentId));
+        }
+      },
+      [dispatch, isReplyOpen],
+    ),
+
+    closeReply: useCallback(() => {
+      if (isReplyOpen) {
+        setIsReplyOpen(false);
+        dispatch(commentsActions.closeReply());
+      }
+    }, [dispatch, isReplyOpen]),
   };
 
   return (
@@ -65,6 +88,9 @@ function Comments({ id }) {
         sendComment={callbacks.sendComment}
         parent={{ _id: id, _type: 'article' }}
         userId={userId}
+        closeReply={callbacks.closeReply}
+        openReply={callbacks.openReply}
+        isReplyOpen={isReplyOpen}
       />
     </Spinner>
   );

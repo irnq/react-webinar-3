@@ -3,19 +3,8 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import dateFormat from '../../utils/date-format';
-import CommentReply from '../comment-reply';
 
-function Comment({
-  comment,
-  locale,
-  t,
-  isAuth,
-  sendComment,
-  onReply,
-  isReplyOpen,
-  onCancel,
-  self,
-}) {
+function Comment({ comment, locale, t, onReply, self }) {
   const cn = bem('Comment');
 
   return (
@@ -28,16 +17,6 @@ function Comment({
       <button className={cn('reply')} onClick={() => onReply(comment._id)}>
         {t('comments.reply')}
       </button>
-      {isReplyOpen && (
-        <CommentReply
-          t={t}
-          title={t('comments.newReply')}
-          isAuth={isAuth}
-          onSubmit={sendComment}
-          parent={{ _id: comment._id, _type: 'comment' }}
-          onCancel={() => onCancel(null)}
-        />
-      )}
     </div>
   );
 }
@@ -55,17 +34,12 @@ Comment.propTypes = {
   }),
   t: PropTypes.func,
   onReply: PropTypes.func,
-  onCancel: PropTypes.func,
-  sendComment: PropTypes.func,
-  isReplyOpen: PropTypes.bool,
   self: PropTypes.bool,
 };
 
 Comment.defaultProps = {
   t: (text) => text,
   onReply: () => {},
-  sendComment: () => {},
-  onCancel: () => {},
 };
 
 export default memo(Comment);

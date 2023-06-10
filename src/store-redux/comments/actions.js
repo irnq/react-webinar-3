@@ -53,4 +53,26 @@ export default {
       }
     };
   },
+
+  openReply: (parentId) => {
+    const reply = {
+      _id: `${parentId}-reply`,
+      parent: { _id: parentId, _type: 'comment' },
+      isReply: true,
+    };
+    return { type: 'comments/open-reply', payload: reply };
+  },
+
+  reOpenReply: (parentId) => {
+    const reply = {
+      _id: `${parentId}-reply`,
+      parent: { _id: parentId, _type: 'comment' },
+      isReply: true,
+    };
+    return { type: 'comments/reopen-reply', payload: reply };
+  },
+
+  closeReply: () => {
+    return { type: 'comments/close-reply' };
+  },
 };

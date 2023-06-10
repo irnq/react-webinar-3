@@ -1,5 +1,4 @@
 .Comment {
-  margin-bottom: 30px;
 }
 
 .Comment-head {
@@ -39,8 +38,4 @@
   cursor: pointer;
   border: none;
   padding: 0;
-}
-
-.Comment-reply:not(:last-child) {
-  margin-bottom: 30px;
 }
